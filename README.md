@@ -66,9 +66,3 @@ Run lint and tests with:
 uv run ruff check .
 uv run pytest -q
 ```
-
-## Project Docs
-
-- `SPEC.md` defines behavior and UI rules.
-- `TODO.md` is the required task order (one task at a time).
-- `ASCII_VISUALS.md` is the source of truth for rendering.
