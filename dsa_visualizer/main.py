@@ -7,16 +7,39 @@ from textual.widgets import Static, TextArea
 from dsa_visualizer.core.executor import Executor
 from dsa_visualizer.core.input_accumulator import classify_buffer
 from dsa_visualizer.core.snapshotter import Snapshot, Snapshotter, diff_snapshots
-from dsa_visualizer.render.memory_view import render_memory
-from dsa_visualizer.core.types import Cell
+from dsa_visualizer.core.types import Cell, MemoryBlock
+from dsa_visualizer.render.memory_view import get_memory_blocks, render_memory
 from dsa_visualizer.ui.cell_render import render_cell_text
 from dsa_visualizer.ui.input_area import InputArea
 from dsa_visualizer.ui.input_utils import clamp_input_height
-from dsa_visualizer.ui.overview import render_heading, render_overview
+from dsa_visualizer.ui.overview import render_overview
 from dsa_visualizer.ui.text_constants import BANNER, INPUT_PLACEHOLDER
 
 MIN_INPUT_LINES = 5
 MAX_INPUT_LINES = 10
+
+
+def render_memory_block_text(block: MemoryBlock, *, expanded: bool) -> Text:
+    """Render a memory block with expand/collapse support."""
+    marker = " ▾" if expanded else " ▸"
+
+    text = Text()
+    # First line of header with marker
+    header_lines = block.header.split("\n")
+    text.append(header_lines[0])
+    text.append(marker, style="dim")
+
+    # Additional header lines (for aliased variables)
+    for line in header_lines[1:]:
+        text.append("\n")
+        text.append(line)
+
+    # Show content if expanded
+    if expanded:
+        text.append("\n")
+        text.append(block.content)
+
+    return text
 
 
 class DSAApp(App):
@@ -37,10 +60,6 @@ class DSAApp(App):
         content-align: center middle;
         height: 3;
         text-align: center;
-    }
-
-    #heading {
-        height: 1;
     }
 
     #content {
@@ -77,12 +96,22 @@ class DSAApp(App):
         padding: 0 1;
     }
 
+    #memory-history {
+        height: 1fr;
+    }
+
     #input-cell {
         border: round #3cbf5a;
         height: 5;
     }
 
     .cell-output {
+        border: round #3a3a3a;
+        padding: 0 1;
+        margin: 0 0 0 0;
+    }
+
+    .memory-cell {
         border: round #3a3a3a;
         padding: 0 1;
         margin: 0 0 0 0;
@@ -99,7 +128,6 @@ class DSAApp(App):
 
     def compose(self) -> ComposeResult:
         yield Static(BANNER, id="banner")
-        yield Static(render_heading(), id="heading")
         with VerticalScroll(id="content"):
             yield Static(render_overview(), id="overview-panel")
             with Horizontal(id="output"):
@@ -114,7 +142,8 @@ class DSAApp(App):
                             "Data Structures Visualization", "in real time"
                         )
                     )
-                    yield Static("", id="memory-body", markup=False)
+                    with VerticalScroll(id="memory-history"):
+                        pass  # Memory cells will be mounted here
 
     def on_text_area_changed(self, event: TextArea.Changed) -> None:
         text_area = event.text_area
@@ -133,6 +162,10 @@ class DSAApp(App):
         self._cell_widgets: dict[int, Static] = {}
         self._cell_expanded: dict[int, bool] = {}
         self._overview_collapsed = False
+        # Memory cell tracking
+        self._memory_blocks: dict[str, MemoryBlock] = {}
+        self._memory_widgets: dict[str, Static] = {}
+        self._memory_expanded: dict[str, bool] = {}
         self._render_overview_panel()
 
     def on_key(self, event) -> None:
@@ -148,6 +181,7 @@ class DSAApp(App):
             self._overview_collapsed = not self._overview_collapsed
             self._render_overview_panel()
             return
+        # Handle code cell clicks
         if event.widget.id and event.widget.id.startswith("cell-"):
             try:
                 cell_id = int(event.widget.id.split("-", 1)[1])
@@ -161,6 +195,19 @@ class DSAApp(App):
             widget = self._cell_widgets.get(cell_id)
             if widget is not None:
                 widget.update(render_cell_text(cell, expanded=expanded))
+            return
+        # Handle memory cell clicks
+        if event.widget.id and event.widget.id.startswith("mem-"):
+            widget_id = event.widget.id[4:]  # Remove "mem-" prefix
+            block_id = widget_id.replace("_", "#", 1)  # Restore obj#N format
+            block = self._memory_blocks.get(block_id)
+            if block is None:
+                return
+            expanded = not self._memory_expanded.get(block_id, True)
+            self._memory_expanded[block_id] = expanded
+            widget = self._memory_widgets.get(block_id)
+            if widget is not None:
+                widget.update(render_memory_block_text(block, expanded=expanded))
 
     def handle_code_enter(self, *, force_submit: bool) -> bool:
         text_area = self.query_one("#input-cell", InputArea)
@@ -227,8 +274,47 @@ class DSAApp(App):
         return text
 
     def _update_memory(self, snapshot: Snapshot) -> None:
-        memory_body = self.query_one("#memory-body", Static)
-        memory_body.update(render_memory(snapshot))
+        """Update memory view with individual expandable cells."""
+        memory_history = self.query_one("#memory-history", VerticalScroll)
+
+        # Get current blocks
+        blocks = get_memory_blocks(snapshot)
+        new_block_ids = {block.block_id for block in blocks}
+        old_block_ids = set(self._memory_blocks.keys())
+
+        # Remove widgets for blocks that no longer exist
+        for block_id in old_block_ids - new_block_ids:
+            widget = self._memory_widgets.pop(block_id, None)
+            if widget is not None:
+                widget.remove()
+            self._memory_blocks.pop(block_id, None)
+            self._memory_expanded.pop(block_id, None)
+
+        # Update or add widgets for current blocks
+        for block in blocks:
+            self._memory_blocks[block.block_id] = block
+
+            # Default to expanded for new blocks
+            if block.block_id not in self._memory_expanded:
+                self._memory_expanded[block.block_id] = True
+
+            expanded = self._memory_expanded[block.block_id]
+
+            if block.block_id in self._memory_widgets:
+                # Update existing widget
+                widget = self._memory_widgets[block.block_id]
+                widget.update(render_memory_block_text(block, expanded=expanded))
+            else:
+                # Create new widget (sanitize ID: replace # with _)
+                safe_id = block.block_id.replace("#", "_")
+                widget = Static(
+                    render_memory_block_text(block, expanded=expanded),
+                    classes="memory-cell",
+                    id=f"mem-{safe_id}",
+                )
+                memory_history.mount(widget)
+                self._memory_widgets[block.block_id] = widget
+
         memory = self.query_one("#memory", VerticalScroll)
         self.call_after_refresh(memory.scroll_end, animate=False)
         content = self.query_one("#content", VerticalScroll)

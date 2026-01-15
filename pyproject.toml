@@ -1,9 +1,9 @@
 [project]
 name = "dsa-visualizer-engine"
 version = "0.1.0"
-description = "Add your description here"
+description = "Terminal-based interactive notebook that visualizes data structures as live ASCII diagrams"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.10"
 dependencies = ["textual", "rich"]
 
 [project.optional-dependencies]
