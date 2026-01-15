@@ -29,8 +29,9 @@ htmlcov/
 .env
 .env.*
 
-# Markdown (track README only)
+# Markdown (track specific files only)
 *.md
 !README.md
+!ASCII_VISUALS.md
 
 private/
