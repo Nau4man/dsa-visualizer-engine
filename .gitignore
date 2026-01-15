@@ -32,3 +32,5 @@ htmlcov/
 # Markdown (track README only)
 *.md
 !README.md
+
+private/
