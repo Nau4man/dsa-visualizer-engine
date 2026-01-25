@@ -1,4 +1,4 @@
-from dsa_visualizer.core.structures import BinarySearchTree
+from dsa_visualizer.data_structures.implementations.structures import BinarySearchTree
 
 
 def test_bst_search_finds_value() -> None:

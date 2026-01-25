@@ -1,4 +1,4 @@
-from dsa_visualizer.ui.overview import DATA_STRUCTURES_HEADING, render_overview
+from dsa_visualizer.data_structures.ui.overview import DATA_STRUCTURES_HEADING, render_overview
 from dsa_visualizer.ui.text_constants import BANNER, INPUT_PLACEHOLDER
 
 

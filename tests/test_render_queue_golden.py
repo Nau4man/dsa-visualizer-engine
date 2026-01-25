@@ -1,4 +1,4 @@
-from dsa_visualizer.render.queue import render_queue
+from dsa_visualizer.data_structures.render.queue import render_queue
 
 
 def test_render_queue_four_items() -> None:

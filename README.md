@@ -1,6 +1,6 @@
 # DSA Visualizer Engine
 
-A terminal-based interactive Python notebook that visualizes data structures as live ASCII diagrams. It's an educational tool designed to teach how variables bind to objects, mutations change memory state, and data structures behave internally.
+A terminal-based interactive Python notebook that visualizes data structures and algorithms as live ASCII diagrams. It's an educational tool designed to teach how variables bind to objects, mutations change memory state, and how data structures and algorithms behave internally.
 
 ![DSA Visualizer Demo](demo.png)
 
@@ -17,7 +17,7 @@ This tool makes the invisible visible:
 - **Watch variables bind** to objects
 - **See mutations happen** in real time
 - **Understand aliasing** through visual grouping
-- **Explore data structures** interactively
+- **Explore data structures and algorithms** interactively
 
 Code comes **after understanding**, not before.
 
@@ -158,6 +158,13 @@ The engine also detects custom implementations through duck typing:
 
 ---
 
+## Built-in Algorithms
+
+Run algorithms against arrays and trees and watch the step-by-step highlights in the memory view.
+Use the in-app Algorithms panel (`?`) for the current list and examples.
+
+---
+
 ## Supported Visualizations
 
 | Type | Visualization |
@@ -222,9 +229,12 @@ uv sync --dev
 
 ```
 dsa_visualizer/
-├── core/           # Execution engine, snapshotter, data structures
-├── render/         # ASCII visualization renderers
-└── ui/             # Textual TUI components
+├── algorithms/     # Algorithm types, runners, registry, UI, render helpers
+├── data_structures/ # Implementations, renderers, and overview panel
+├── core/           # Execution engine + snapshotter
+├── render/         # Memory view renderer
+├── ui/             # Shared Textual UI components
+└── main.py         # TUI app wiring
 tests/              # Test suite with golden tests
 ```
 

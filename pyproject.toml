@@ -1,7 +1,11 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "dsa-visualizer-engine"
 version = "0.1.0"
-description = "Terminal-based interactive notebook that visualizes data structures as live ASCII diagrams"
+description = "Terminal-based interactive notebook that visualizes data structures and algorithms as live ASCII diagrams"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = ["textual", "rich"]
@@ -11,3 +15,9 @@ dev = ["pytest", "ruff"]
 
 [project.scripts]
 dsa = "dsa_visualizer.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["dsa_visualizer"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"man/dsa.1" = "share/man/man1/dsa.1"

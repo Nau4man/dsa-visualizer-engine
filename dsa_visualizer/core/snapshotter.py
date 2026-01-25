@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import types
 
-from dsa_visualizer.core.structures import (
+from dsa_visualizer.data_structures.implementations.structures import (
     BinarySearchTree,
     BinaryTree,
     BinaryTreeNode,
@@ -19,6 +19,23 @@ from dsa_visualizer.core.structures import (
 
 
 PRIMITIVE_TYPES = (int, float, bool, str, type(None))
+
+# Names that are built-in to the executor and should not be shown in memory view
+BUILTIN_NAMES = frozenset({
+    "EXAMPLES",
+    "search",
+    "tree_search",
+    "tree_traverse",
+    "algo_help",
+    "LinkedList",
+    "DoublyLinkedList",
+    "Stack",
+    "Queue",
+    "BinaryTree",
+    "BinarySearchTree",
+    "MinHeap",
+    "Graph",
+})
 
 
 @dataclass(frozen=True)
@@ -58,6 +75,8 @@ class Snapshotter:
         objects: dict[str, ObjectRecord] = {}
         for name, value in globals_dict.items():
             if name.startswith("__"):
+                continue
+            if name in BUILTIN_NAMES:
                 continue
             if isinstance(value, PRIMITIVE_TYPES):
                 names[name] = value

@@ -1,5 +1,5 @@
-from dsa_visualizer.core.structures import LinkedList
-from dsa_visualizer.render.linked_list import render_linked_list
+from dsa_visualizer.data_structures.implementations.structures import LinkedList
+from dsa_visualizer.data_structures.render.linked_list import render_linked_list
 
 
 def test_render_linked_list_three_nodes() -> None:

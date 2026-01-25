@@ -1,4 +1,4 @@
-from dsa_visualizer.render.primitive import render_primitive
+from dsa_visualizer.data_structures.render.primitive import render_primitive
 
 
 def test_render_int_includes_value() -> None:

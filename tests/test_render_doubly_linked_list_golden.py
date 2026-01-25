@@ -1,5 +1,5 @@
-from dsa_visualizer.core.structures import DoublyLinkedList
-from dsa_visualizer.render.doubly_linked_list import render_doubly_linked_list
+from dsa_visualizer.data_structures.implementations.structures import DoublyLinkedList
+from dsa_visualizer.data_structures.render.doubly_linked_list import render_doubly_linked_list
 
 
 def test_render_doubly_linked_list_three_nodes() -> None:

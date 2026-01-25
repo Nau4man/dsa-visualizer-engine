@@ -30,7 +30,7 @@ def test_structural_binary_tree_rendering() -> None:
 
 
 def test_bst_rendering() -> None:
-    from dsa_visualizer.core.structures import BinarySearchTree
+    from dsa_visualizer.data_structures.implementations.structures import BinarySearchTree
 
     tree = BinarySearchTree([8, 3, 10, 1, 6])
     snapshotter = Snapshotter()
@@ -42,7 +42,7 @@ def test_bst_rendering() -> None:
 
 
 def test_min_heap_rendering() -> None:
-    from dsa_visualizer.core.structures import MinHeap
+    from dsa_visualizer.data_structures.implementations.structures import MinHeap
 
     heap = MinHeap([1, 3, 5])
     snapshotter = Snapshotter()
@@ -85,7 +85,7 @@ def test_structural_min_heap_rendering() -> None:
 
 
 def test_graph_rendering() -> None:
-    from dsa_visualizer.core.structures import Graph
+    from dsa_visualizer.data_structures.implementations.structures import Graph
 
     graph = Graph()
     graph.add_edge("A", "B")

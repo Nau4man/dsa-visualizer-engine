@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dsa_visualizer.render.binary_tree import render_binary_tree
+from dsa_visualizer.data_structures.render.binary_tree import render_binary_tree
 
 
 def render_binary_search_tree(root: object | None) -> str:

@@ -21,6 +21,10 @@ htmlcov/
 *.swp
 .vscode/
 .idea/
+.claude/
+.python-version
+.codex/
+.gemini/
 
 # Logs
 *.log

@@ -1,4 +1,4 @@
-from dsa_visualizer.render.array import render_array
+from dsa_visualizer.data_structures.render.array import render_array
 
 
 def test_render_array_empty() -> None:

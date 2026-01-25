@@ -1,4 +1,4 @@
-from dsa_visualizer.render.stack import render_stack
+from dsa_visualizer.data_structures.render.stack import render_stack
 
 
 def test_render_stack_four_items() -> None:

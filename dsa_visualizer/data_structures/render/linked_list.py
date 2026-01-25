@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dsa_visualizer.core.structures import LinkedList
+from dsa_visualizer.data_structures.implementations.structures import LinkedList
 
 
 def render_linked_list(target: object) -> str:

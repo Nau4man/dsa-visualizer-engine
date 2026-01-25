@@ -1,5 +1,5 @@
-from dsa_visualizer.core.structures import BinarySearchTree
-from dsa_visualizer.render.binary_search_tree import render_binary_search_tree
+from dsa_visualizer.data_structures.implementations.structures import BinarySearchTree
+from dsa_visualizer.data_structures.render.binary_search_tree import render_binary_search_tree
 
 
 def test_render_bst_sample() -> None:

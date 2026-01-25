@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dsa_visualizer.core.structures import DoublyLinkedList
+from dsa_visualizer.data_structures.implementations.structures import DoublyLinkedList
 
 
 def render_doubly_linked_list(target: object) -> str:

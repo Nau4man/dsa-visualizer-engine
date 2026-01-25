@@ -1,0 +1,381 @@
+.TH DSA 1 "January 2026" "dsa 0.1.0" "User Commands"
+.SH NAME
+dsa \- interactive terminal-based data structure and algorithm visualizer
+.SH SYNOPSIS
+.B dsa
+.SH DESCRIPTION
+.B dsa
+is an interactive terminal application that visualizes data structures and algorithms as live ASCII diagrams. Write Python code and watch variables come to life with real-time visualization.
+.PP
+The application provides:
+.IP \(bu 2
+Real-time visualization of data structures
+.IP \(bu 2
+Step-by-step algorithm animations
+.IP \(bu 2
+Built-in data structure implementations
+.IP \(bu 2
+Interactive Python REPL environment
+.SH GETTING STARTED
+Launch the application by typing:
+.PP
+.RS
+.B dsa
+.RE
+.PP
+Type Python code in the input area at the bottom left. Press
+.B Enter
+to execute when your code is complete. Variables are visualized in real-time on the right panel.
+.PP
+Expand the
+.B "Data Structures"
+or
+.B "Algorithms"
+panels at the top for quick reference. Press
+.B ?
+for help.
+.SH DATA STRUCTURES
+The following data structures are built-in and ready to use:
+.SS LinkedList
+A singly linked list with head pointer.
+.PP
+.RS
+.nf
+ll = LinkedList()
+ll.append(10)
+ll.append(20)
+ll.append(30)
+.fi
+.RE
+.PP
+Visualized as:
+.B "10 -> 20 -> 30 -> null"
+.SS DoublyLinkedList
+A doubly linked list with head and tail pointers.
+.PP
+.RS
+.nf
+dll = DoublyLinkedList()
+dll.append(1)
+dll.append(2)
+dll.append(3)
+.fi
+.RE
+.PP
+Visualized with bidirectional arrows showing prev/next pointers.
+.SS Stack
+A LIFO (Last In, First Out) data structure.
+.PP
+.RS
+.nf
+s = Stack()
+s.push(1)
+s.push(2)
+s.push(3)
+s.peek()    # Returns 3
+s.pop()     # Returns 3
+.fi
+.RE
+.SS Queue
+A FIFO (First In, First Out) data structure.
+.PP
+.RS
+.nf
+q = Queue()
+q.enqueue(1)
+q.enqueue(2)
+q.enqueue(3)
+q.peek()      # Returns 1
+q.dequeue()   # Returns 1
+.fi
+.RE
+.SS BinaryTree
+A general binary tree structure.
+.PP
+.RS
+.nf
+tree = BinaryTree()
+tree.insert(10)
+tree.insert(5)
+tree.insert(15)
+.fi
+.RE
+.SS BinarySearchTree
+A binary search tree maintaining the BST property (left < node < right).
+.PP
+.RS
+.nf
+bst = BinarySearchTree()
+bst.insert(50)
+bst.insert(25)
+bst.insert(75)
+bst.search(25)  # Returns the node
+.fi
+.RE
+.SS MinHeap
+A min-heap priority queue where the smallest element is always at the root.
+.PP
+.RS
+.nf
+heap = MinHeap()
+heap.insert(5)
+heap.insert(3)
+heap.insert(7)
+heap.peek()     # Returns 3
+heap.pop_min()  # Returns 3
+.fi
+.RE
+.SS Graph
+An adjacency list representation of a graph.
+.PP
+.RS
+.nf
+g = Graph()
+g.add_edge('A', 'B')
+g.add_edge('A', 'C')
+g.add_edge('B', 'C')
+.fi
+.RE
+.SH ALGORITHMS
+Run algorithm visualizations to see step-by-step execution with animated highlights.
+.SS Array Search Algorithms
+Search for a value in an array using:
+.PP
+.RS
+.B search(algorithm, data, target)
+.RE
+.PP
+Available algorithms:
+.TP
+.B linear
+O(n) - Checks each element sequentially. Works on any array.
+.TP
+.B binary
+O(log n) - Divides search space in half. Requires sorted array.
+.TP
+.B jump
+O(\[sr]n) - Jumps ahead by \[sr]n blocks. Requires sorted array.
+.TP
+.B interpolation
+O(log log n) average - Estimates position based on value. Requires sorted array with uniform distribution.
+.TP
+.B exponential
+O(log n) - Finds bounds exponentially, then binary search. Requires sorted array.
+.PP
+Example:
+.PP
+.RS
+.nf
+search('binary', [1, 3, 5, 7, 9, 11, 13], 7)
+search('linear', [42, 17, 8, 91, 33], 8)
+.fi
+.RE
+.SS Tree Search Algorithms
+Search for a value in a tree using:
+.PP
+.RS
+.B tree_search(algorithm, tree, target)
+.RE
+.PP
+Available algorithms:
+.TP
+.B dfs
+O(n) - Depth-First Search. Explores as deep as possible before backtracking.
+.TP
+.B bfs
+O(n) - Breadth-First Search. Explores level by level.
+.TP
+.B bst
+O(log n) average - Uses BST property for efficient search. Only for BinarySearchTree.
+.PP
+Example:
+.PP
+.RS
+.nf
+bst = BinarySearchTree()
+bst.insert(50)
+bst.insert(25)
+bst.insert(75)
+bst.insert(10)
+tree_search('bfs', bst, 25)
+.fi
+.RE
+.SS Tree Traversal Algorithms
+Visit all nodes in a tree using:
+.PP
+.RS
+.B tree_traverse(algorithm, tree)
+.RE
+.PP
+Available algorithms:
+.TP
+.B dfs
+Pre-order traversal (root, left, right).
+.TP
+.B bfs
+Level-order traversal (top to bottom, left to right).
+.PP
+Example:
+.PP
+.RS
+.nf
+tree_traverse('dfs', bst)
+.fi
+.RE
+.SS Algorithm Visualization Markers
+During algorithm animations, elements are marked:
+.TP
+.B \[->]
+Currently examining this element
+.TP
+.B \[bu]
+Already visited
+.TP
+.B \[OK]
+Found the target
+.TP
+.B ?
+Being compared
+.TP
+.B x
+Eliminated (ruled out)
+.TP
+.B [ ]
+Search boundaries (for binary search)
+.SH KEYBOARD SHORTCUTS
+.TP
+.B Enter
+Run code when complete, or insert newline if incomplete
+.TP
+.B Ctrl+Enter
+Force run code immediately
+.TP
+.B ?
+Toggle help panel
+.TP
+.B Ctrl+Q
+Quit the application
+.TP
+.B Shift+Drag
+Select text, then Ctrl+C to copy
+.SS Algorithm Mode Controls
+When an algorithm visualization is running:
+.TP
+.B +
+Speed up animation
+.TP
+.B \-
+Slow down animation
+.TP
+.B Esc
+Stop animation and exit algorithm mode
+.SH EXAMPLE DATASETS
+Built-in datasets are available for quick experimentation:
+.PP
+.RS
+.nf
+EXAMPLES['arrays']['small']      # [1, 3, 5, 7, 9]
+EXAMPLES['arrays']['medium']     # [2, 4, 8, 16, 32, 64, 128, 256]
+EXAMPLES['arrays']['large']      # [1, 5, 10, 15, ... 80]
+EXAMPLES['arrays']['unsorted']   # [42, 17, 8, 91, 33, 56, 24]
+EXAMPLES['trees']['balanced']    # [50, 25, 75, 12, 37, 62, 87]
+EXAMPLES['trees']['small']       # [10, 5, 15]
+.fi
+.RE
+.PP
+Example usage:
+.PP
+.RS
+.nf
+search('binary', EXAMPLES['arrays']['medium'], 32)
+.fi
+.RE
+.SH EXAMPLES
+.SS Example 1: Visualize a Linked List
+.PP
+.RS
+.nf
+ll = LinkedList()
+ll.append(1)
+ll.append(2)
+ll.append(3)
+.fi
+.RE
+.PP
+This creates a linked list and visualizes it as nodes with arrows.
+.SS Example 2: Binary Search Animation
+.PP
+.RS
+.nf
+data = [1, 3, 5, 7, 9, 11, 13, 15]
+search('binary', data, 11)
+.fi
+.RE
+.PP
+Watch the algorithm narrow down the search space by half each step until it finds 11.
+.SS Example 3: Build and Search a BST
+.PP
+.RS
+.nf
+bst = BinarySearchTree()
+for val in [50, 25, 75, 10, 30, 60, 90]:
+    bst.insert(val)
+tree_search('bst', bst, 30)
+.fi
+.RE
+.PP
+The BST is visualized as a tree. The search animation shows the path from root to the target.
+.SS Example 4: Compare Search Algorithms
+.PP
+Run different algorithms on the same data to compare their behavior:
+.PP
+.RS
+.nf
+data = EXAMPLES['arrays']['medium']
+search('linear', data, 64)      # Checks each element
+search('binary', data, 64)      # Divides in half each step
+search('jump', data, 64)        # Jumps ahead, then linear
+.fi
+.RE
+.SS Example 5: Tree Traversal
+.PP
+.RS
+.nf
+tree = BinaryTree()
+tree.insert(1)
+tree.insert(2)
+tree.insert(3)
+tree_traverse('bfs', tree)
+.fi
+.RE
+.PP
+Watch the BFS traverse the tree level by level.
+.SH INTERFACE
+The application has four main areas:
+.TP
+.B Data Structures Panel
+Collapsible reference showing all available data structures with complexity info. Click to expand/collapse.
+.TP
+.B Algorithms Panel
+Collapsible reference showing all available algorithms with examples. Click to expand/collapse.
+.TP
+.B Code Workspace (left)
+Where you type Python code. Previous executions are shown above the input area.
+.TP
+.B Visualization (right)
+Real-time ASCII visualization of your data structures and algorithm animations.
+.SH TIPS
+.IP \(bu 2
+Click on any code cell to expand/collapse its output details.
+.IP \(bu 2
+Click on memory cells to expand/collapse the visualization.
+.IP \(bu 2
+Only one reference panel (Data Structures or Algorithms) can be open at a time.
+.IP \(bu 2
+Use the built-in EXAMPLES for quick testing.
+.IP \(bu 2
+Adjust animation speed with + and - during algorithm visualization.
+.SH AUTHOR
+DSA Visualizer Engine
+.SH SEE ALSO
+.BR python (1)

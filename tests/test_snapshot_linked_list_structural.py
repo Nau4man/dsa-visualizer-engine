@@ -97,7 +97,7 @@ def test_snapshot_skips_class_and_function_definitions() -> None:
 
 
 def test_stack_rendering_in_memory_view() -> None:
-    from dsa_visualizer.core.structures import Stack
+    from dsa_visualizer.data_structures.implementations.structures import Stack
 
     stack = Stack(["A", "B"])
     snapshotter = Snapshotter()

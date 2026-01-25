@@ -1,5 +1,5 @@
-from dsa_visualizer.core.structures import BinaryTree
-from dsa_visualizer.render.binary_tree import render_binary_tree
+from dsa_visualizer.data_structures.implementations.structures import BinaryTree
+from dsa_visualizer.data_structures.render.binary_tree import render_binary_tree
 
 
 def test_render_binary_tree_sample() -> None:

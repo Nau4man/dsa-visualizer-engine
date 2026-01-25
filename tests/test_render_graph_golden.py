@@ -1,4 +1,4 @@
-from dsa_visualizer.render.graph import render_graph
+from dsa_visualizer.data_structures.render.graph import render_graph
 
 
 def test_render_undirected_graph() -> None:

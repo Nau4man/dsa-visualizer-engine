@@ -16,6 +16,7 @@ class InputArea(TextArea):
             if callable(handler):
                 handler()
             event.prevent_default()
+            event.stop()
             return
         if event.key == "ctrl+enter":
             handler = getattr(self.app, "handle_code_enter", None)

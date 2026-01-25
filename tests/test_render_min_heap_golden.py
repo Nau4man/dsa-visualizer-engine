@@ -1,5 +1,5 @@
-from dsa_visualizer.core.structures import MinHeap
-from dsa_visualizer.render.min_heap import render_min_heap
+from dsa_visualizer.data_structures.implementations.structures import MinHeap
+from dsa_visualizer.data_structures.render.min_heap import render_min_heap
 
 
 def test_render_min_heap_sample() -> None:

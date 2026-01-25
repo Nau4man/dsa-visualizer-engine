@@ -2,17 +2,17 @@ from __future__ import annotations
 
 from dsa_visualizer.core.snapshotter import ObjectRecord, Snapshot
 from dsa_visualizer.core.types import MemoryBlock
-from dsa_visualizer.render.array import render_array
-from dsa_visualizer.render.binary_search_tree import render_binary_search_tree
-from dsa_visualizer.render.binary_tree import render_binary_tree
-from dsa_visualizer.render.doubly_linked_list import render_doubly_linked_list
-from dsa_visualizer.render.graph import render_graph
-from dsa_visualizer.render.hashmap import render_hashmap
-from dsa_visualizer.render.linked_list import render_linked_list
-from dsa_visualizer.render.min_heap import render_min_heap
-from dsa_visualizer.render.primitive import render_primitive
-from dsa_visualizer.render.queue import render_queue
-from dsa_visualizer.render.stack import render_stack
+from dsa_visualizer.data_structures.render.array import render_array
+from dsa_visualizer.data_structures.render.binary_search_tree import render_binary_search_tree
+from dsa_visualizer.data_structures.render.binary_tree import render_binary_tree
+from dsa_visualizer.data_structures.render.doubly_linked_list import render_doubly_linked_list
+from dsa_visualizer.data_structures.render.graph import render_graph
+from dsa_visualizer.data_structures.render.hashmap import render_hashmap
+from dsa_visualizer.data_structures.render.linked_list import render_linked_list
+from dsa_visualizer.data_structures.render.min_heap import render_min_heap
+from dsa_visualizer.data_structures.render.primitive import render_primitive
+from dsa_visualizer.data_structures.render.queue import render_queue
+from dsa_visualizer.data_structures.render.stack import render_stack
 
 
 def get_memory_blocks(snapshot: Snapshot) -> list[MemoryBlock]:

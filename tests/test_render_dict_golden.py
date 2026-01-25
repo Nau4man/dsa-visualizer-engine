@@ -1,4 +1,4 @@
-from dsa_visualizer.render.hashmap import render_hashmap
+from dsa_visualizer.data_structures.render.hashmap import render_hashmap
 
 
 def test_render_hashmap_empty() -> None:

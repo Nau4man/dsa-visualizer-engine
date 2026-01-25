@@ -1,11 +1,17 @@
 from __future__ import annotations
 
+from dsa_visualizer.algorithms.types import TreeHighlightContext
+from dsa_visualizer.algorithms.render.highlights import get_node_marker
 
-def render_binary_tree(root: object | None) -> str:
+
+def render_binary_tree(
+    root: object | None,
+    highlights: TreeHighlightContext | None = None,
+) -> str:
     if root is None:
         return "(empty)"
     levels = _build_levels(root)
-    label_width = _label_width(levels)
+    label_width = _label_width(levels, highlights)
     lines: list[str] = []
     max_level = len(levels)
     gaps = _level_gaps(max_level)
@@ -13,7 +19,7 @@ def render_binary_tree(root: object | None) -> str:
         gap = gaps[level_index]
         indent = gap // 2
         positions = _level_positions(level, indent, gap, label_width)
-        lines.append(_render_level_line(level, positions, label_width))
+        lines.append(_render_level_line(level, positions, label_width, highlights))
         if level_index == max_level - 1:
             break
         if not _level_has_children(level):
@@ -58,13 +64,22 @@ def _level_has_children(level: list[object | None]) -> bool:
     return False
 
 
-def _label_width(levels: list[list[object | None]]) -> int:
+def _label_width(
+    levels: list[list[object | None]],
+    highlights: TreeHighlightContext | None = None,
+) -> int:
     max_len = 1
     for level in levels:
         for node in level:
             if node is None:
                 continue
-            max_len = max(max_len, len(str(_node_value(node))))
+            value_len = len(str(_node_value(node)))
+            # Account for marker character if highlights are active
+            if highlights is not None:
+                marker = get_node_marker(node, highlights)
+                if marker:
+                    value_len += 1  # marker takes 1 character
+            max_len = max(max_len, value_len)
     return max(4, max_len + 2)
 
 
@@ -89,14 +104,17 @@ def _level_positions(
 
 
 def _render_level_line(
-    level: list[object | None], positions: list[int], label_width: int
+    level: list[object | None],
+    positions: list[int],
+    label_width: int,
+    highlights: TreeHighlightContext | None = None,
 ) -> str:
     width = positions[-1] + label_width if positions else label_width
     line = [" "] * width
     for node, pos in zip(level, positions):
         if node is None:
             continue
-        label = _format_label(node, label_width)
+        label = _format_label(node, label_width, highlights)
         for i, ch in enumerate(label):
             line[pos + i] = ch
     return "".join(line).rstrip()
@@ -176,9 +194,16 @@ def _node_value(node: object) -> object:
     return getattr(node, "data")
 
 
-def _format_label(node: object, width: int) -> str:
+def _format_label(
+    node: object,
+    width: int,
+    highlights: TreeHighlightContext | None = None,
+) -> str:
     value = str(_node_value(node))
-    label = f"[{value}]"
+    marker = ""
+    if highlights is not None:
+        marker = get_node_marker(node, highlights)
+    label = f"[{marker}{value}]"
     return label.ljust(width)
 
 

@@ -1,4 +1,4 @@
-from dsa_visualizer.core.structures import DoublyLinkedList
+from dsa_visualizer.data_structures.implementations.structures import DoublyLinkedList
 
 
 def test_delete_middle_node() -> None:
